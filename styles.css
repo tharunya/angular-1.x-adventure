@@ -1,0 +1,59 @@
+  body {
+    text-align: center;
+    background-image: url("images/check_luncch.jpg");
+    background-repeat: no-repeat repeat;
+    background-size: cover;
+    background-color:  rgba(216, 141, 91, 0.849);
+  }
+  
+  h1 {
+    font-family: 'Comic sans ms';
+    font-size: 30px;
+    color: #572644;
+  }
+
+  .adjust_image {
+    margin-top: 180px;
+  }
+  
+  p {
+    font-family: 'Calibri';
+    font-size: 20px;
+    margin: 20px;
+    color: #ffffff;
+  }
+
+  input {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    border-radius: 10%;
+    color: rgb(2, 29, 3);
+    background-color: rgba(123, 184, 128, 0.39);
+  }
+  
+  button {
+    margin-top: 10px;    
+    padding: 10px;
+    font-family: 'Comic sans ms';
+    font-size: 20px;
+    background-color: #a9ac29;
+    border-radius: 40%;
+    color: rgb(87, 107, 32);
+  }
+
+  .info {
+    padding: 5px;
+    font-size: 20px;
+    font-family: 'Comic sans ms';
+    width: fit-content;
+    margin: 0 auto;
+    margin-top : 30px;
+    border-radius : 30%;
+    color : #029F12;
+    background-color: #D1FFD6
+    }
+  
