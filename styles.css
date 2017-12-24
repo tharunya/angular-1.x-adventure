@@ -32,7 +32,7 @@
     width: 30%;
     border-radius: 10%;
     color: rgb(2, 29, 3);
-    background-color: rgba(123, 184, 128, 0.39);
+    background-color: rgba(34, 49, 35, 0.39);
   }
   
   button {
@@ -54,6 +54,5 @@
     margin-top : 30px;
     border-radius : 30%;
     color : #029F12;
-    background-color: #D1FFD6
     }
   
