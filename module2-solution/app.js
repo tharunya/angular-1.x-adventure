@@ -1,66 +1,73 @@
-(function() {
+(function () {
+	'use strict';
 
-    var ShoppingListCheckOff = angular.module('ShoppingListCheckOff', [])
-                                        .controller('ToBuyController', ToBuyController)
-	                                    .controller('AlreadyBoughtController', AlreadyBoughtController);
+	angular.module('ShoppingListCheckOff', [])
+	.controller('ToBuyController', ToBuyController)
+	.controller('AlreadyBoughtController', AlreadyBoughtController)
+	.service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
-    ShoppingListCheckOff.service('ShoppingListCheckOffService', function() {
-        let initialItemsToBuy = [
-            { 
-                name: "dogs", 
-                quantity: 2 
-            },
-            { 
-                name: "cookies", 
-                quantity: 10 
-            },
-            { 
-                name: "shoes", 
-                quantity: 5 
-            },
-            { 
-                name: "bands", 
-                quantity: 20
-            },
-            { 
-                name: "watches", 
-                quantity: 8 
-            }
-        ];
-
-        let bought = [];
-
-        this.buyItem = function(index) {
-            let boughtItem = initialItemsToBuy.splice(index, 1);
-            bought.push(boughtItem[0]);
-        }
-
-        this.toBuyList = function() {
-            return initialItemsToBuy;
-        }
-
-        this.boughtList = function() {
-            return bought;
-        }
-    });
-
-
-    ToBuyController.inject = ['ShoppingListCheckOffService'];
+	ToBuyController.inject = ['ShoppingListCheckOffService'];
 	function ToBuyController (ShoppingListCheckOffService) {
 		var buyer = this;
 
-		buyer.buyList = ShoppingListCheckOffService.toBuyList();
+		buyer.toBuyList = ShoppingListCheckOffService.toBuy();
 
-		buyer.buyThisItem = function (itemIndex) {
-			ShoppingListCheckOffService.buyItem(itemIndex);
+		buyer.moveToBoughtList = function (itemIndex) {
+			ShoppingListCheckOffService.moveToBoughtList(itemIndex);
 		};
 	}
-    
-    AlreadyBoughtController.inject = ['ShoppingListCheckOffService'];
+
+	AlreadyBoughtController.inject = ['ShoppingListCheckOffService'];
 	function AlreadyBoughtController (ShoppingListCheckOffService) {
 		var displayList = this;
 
-		displayList.boughtList = ShoppingListCheckOffService.boughtList();
-    }	
-		
+		displayList.boughtList = ShoppingListCheckOffService.bought;		
+	}
+
+	function ShoppingListCheckOffService () {
+		var service = this;
+
+		service.toBuyList = [];
+		service.bought = [];
+
+		service.initialList = [
+            {
+                name: 'Puppies',
+                quantity: '2 litter',
+                image: '/images/puppies.jpg'
+            },
+            {
+                name: 'Sodas',
+                quantity: '5 bottles',
+                image: '/images/sodas.jpg'
+            },
+            {
+                name: 'Socks',
+                quantity: '2 pairs',
+                image: '/images/socks.jpg'
+            },
+            {
+                name: 'Chips',
+                quantity: '18 bags',
+                image: '/images/chips.jpg'
+            },
+            {
+                name: 'Shoes',
+                quantity: '2 pairs',
+                image: '/images/shoes.jpg'
+            }    
+		];
+
+		service.toBuy = function () {
+			service.toBuyList = service.initialList;
+			return service.toBuyList;
+		};
+
+		service.moveToBoughtList = function (itemIndex) {
+            var boughtItem = service.toBuyList.splice(itemIndex, 1)[0];
+            service.bought.push(boughtItem);
+           return service.bought;	
+		};
+	}
+
 })();
