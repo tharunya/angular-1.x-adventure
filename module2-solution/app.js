@@ -34,27 +34,27 @@
             {
                 name: 'Puppies',
                 quantity: '2 litter',
-            //    image: '/images/puppies.jpg'
+                image: '/images/puppies.jpg'
             },
             {
                 name: 'Sodas',
                 quantity: '5 bottles',
-            //    image: '/images/sodas.jpg'
+                image: '/images/sodas.jpg'
             },
             {
                 name: 'Socks',
                 quantity: '2 pairs',
-            //    image: '/images/socks.jpg'
+                image: '/images/socks.jpg'
             },
             {
                 name: 'Chips',
                 quantity: '18 bags',
-            //    image: '/images/chips.jpg'
+                image: '/images/chips.jpg'
             },
             {
                 name: 'Shoes',
                 quantity: '2 pairs',
-            //    image: '/images/shoes.jpg'
+                image: '/images/shoes.jpg'
             }    
 		];
 
