@@ -39,7 +39,7 @@
             {
                 name: 'Sodas',
                 quantity: '5 bottles',
-                image: '/images/sodas.JPG'
+                image: '/images/sodas.jpg'
             },
             {
                 name: 'Socks',
