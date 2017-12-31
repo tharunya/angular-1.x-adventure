@@ -46,7 +46,7 @@
        <h2>Already Bought:</h2>
        <ul>
          <li ng-repeat="item in displayList.boughtList">Bought {{item.quantity}} of {{item.name}} 
-            <img ng-src='{{item.image}}' style="height:80px; width:100px" />
+          <!--  <img ng-src='{{item.image}}' style="height:80px; width:100px" /> -->
          </li>
         </ul>
        <div class="emptyMessage" ng-if='displayList.boughtList.length === 0'>Nothing bought yet.</div>
