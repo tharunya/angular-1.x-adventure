@@ -2,98 +2,99 @@
     'use strict';
     
     angular.module('NarrowItDownApp', [])
-    .controller('NarrowItDownController', NarrowItDownController )
+    .controller('NarrowItDownController', NarrowItDownController)
     .service('MenuSearchService', MenuSearchService)
-    .directive('foundItems', FoundItemsDirective)
-     .constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
+    .constant('ApiBasePath', "https://davids-restaurant.herokuapp.com")
+    .directive('foundItems', FoundItemsDirective);
     
-    
-    function FoundItemsDirective() {
-     var ddo = {
-       templateUrl: 'foundList.html',
-       scope: {
-         items: '<',
-         onRemove: '&'
-       },
-       controller: FoundItemsDirectiveListDirectiveController,
-       controllerAs: 'list',
-       bindToController: true
-     };
-    
-     return ddo;
-    }
-    
-    function FoundItemsDirectiveListDirectiveController() {
-      var list = this;
-    
-    
-    }
-      var items =[];
-      function isEmpty(val){
-        return (val === undefined || val == null || val.length <= 0) ? false : true;
-    }
     NarrowItDownController.$inject = ['MenuSearchService'];
     function NarrowItDownController(MenuSearchService) {
       var list = this;
-      var isItemNotFound=false;
-    list.getItems=function(itemDesc)
-      {
-       list.display=false;
-      var description=isEmpty(itemDesc)
+      list.searchTerm = "";
+      list.found = [];
+      list.empty = false;
     
-    
-      var promise = MenuSearchService.getMatchedMenuItems();
-      promise.then(function (response) {
-      var foundItems = response.data;
-      angular.forEach(foundItems.menu_items, function (item, idx) {
-        if (item.description.indexOf(itemDesc)!== -1 && description )
-        {
-        list.display=true;
-          items.push(item);
-          list.items=items;
-        }
-    
-    
-      });
-        if(!list.display || !description)
-        {
-        list.show=true;
-        list.display=false;
-        }
-        else{
-        list.show=false;
-        list.display=true;
-        
-        }
-        
+      list.searchMenuItems = function () {
+        var promise = MenuSearchService.getMatchedMenuItems(list.searchTerm);
+        promise.then(function (response) {
+          list.found = response;
+          list.empty = MenuSearchService.isEmpty();
         })
         .catch(function (error) {
-            console.log("Something went terribly wrong in the promise");
-      });
+          console.log(error);
+        })
+      };
     
-    
-    }
-    list.removeItem = function (itemIndex) {
-        console.log("One item is being removed from this list:", this);
+      list.removeItem = function (itemIndex) {
         MenuSearchService.removeItem(itemIndex);
       };
     }
     
-    MenuSearchService.$inject = ['$http','ApiBasePath'];
-    function MenuSearchService($http,ApiBasePath) {
+    function FoundItemsDirective() {
+      var ddo = {
+        templateUrl: 'foundList.html',
+        scope: {
+          found: '<',
+          onRemove: '&',
+          empty: '<'
+        },
+        controller: FoundItemsDirectiveController,
+        controllerAs: 'list',
+        bindToController: true
+      };
+    
+      return ddo;
+    }
+    
+    function FoundItemsDirectiveController(){
+      var list = this;
+    }
+    
+    MenuSearchService.$inject = ['$http', 'ApiBasePath'];
+    function MenuSearchService($http, ApiBasePath) {
       var service = this;
-      service.getMatchedMenuItems = function () {
-        var response = $http({
+      var foundItems = [];
+    
+      service.getMatchedMenuItems = function (searchTerm) {
+        return $http({
           method: "GET",
-          url: (ApiBasePath + "/menu_items.json"),
-          headers: { 'Cache-Control' : 'no-cache' }
+          url: (ApiBasePath + "/menu_items.json")
+        })
+        .then(function(response){
+          foundItems = searchTearmOnArray(
+            searchTerm.toLowerCase(),
+            response.data["menu_items"]
+          );
+          return foundItems;
         });
-        return response;
       };
+    
       service.removeItem = function (itemIndex) {
-        items.splice(itemIndex, 1);
+        foundItems.splice(itemIndex, 1);
       };
+    
+      service.isEmpty = function(){
+        return (foundItems.length == 0);
+      };
+    
+      function searchTearmOnArray(enteredText, arrayOfItem){
+        if (enteredText != ""){
+          return itemsThatMatchedTerm(enteredText, arrayOfItem);
+        }
+        return [];
+      }
+    
+      function itemsThatMatchedTerm(enteredText, arrayOfItem){
+        var arrayOfMatchedItem = [];
+        for (var i = 0; i < arrayOfItem.length; i++) {
+          if (arrayOfItem[i].description.includes(enteredText)){
+            arrayOfMatchedItem.push(arrayOfItem[i]);
+          }
+        }
+        return arrayOfMatchedItem;
+      }
     
     }
     
     })();
+    

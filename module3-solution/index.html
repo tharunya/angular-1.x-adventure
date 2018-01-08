@@ -1,39 +1,23 @@
+
 <!DOCTYPE html>
-<html ng-app='NarrowItDownApp'>
+<html ng-app="NarrowItDownApp" lang="en">
   <head>
-    <title>Narrow Down Your Menu Choice</title>
+    <title>Narrow Down Menu Choice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/styles.css">  
   </head>
-<body>
-  <div class="container" ng-controller='NarrowItDownController as list'>
+<body> 
+   <div class="container" ng-controller="NarrowItDownController as list">
     <h1>Narrow Down Your Chinese Menu Choice</h1>
-
-    <div class="form-group" >
-      <input type="text" placeholder="search term" class="form-control" ng-model="list.itemDesc">
-    </div>
-    <div class="form-group narrow-button">
-      <button class="btn btn-primary" ng-click="list.getItems(list.itemDesc)">Narrow It Down For Me!</button>
-    </div>
-    <br>
-    <br>
-    <br>
-    <div class="error" ng-show="list.show">Nothing found!</div>
-  <br>
-
-
-    <!-- found-items should be implemented as a component -->
-    <div ng-show="list.display">
-      <found-items
-        items="list.items"
-        on-remove="list.removeItem(index)">
-      </found-items>
-    </div>
+      <input ng-model="list.searchTerm" type="text" class="form-control" placeholder="search term">
+      <button ng-click="list.searchMenuItems();" class="btn btn-primary">Narrow It Down For Me!</button> 
+    
+          <found-items found="list.found" empty="list.empty" on-remove="list.removeItem(index)"></found-items>
+    
+    <h2 ng-if="list.empty" class="ng-scope error">Nothing found</h2>
   </div>
-  <script type="text/javascript" src="angular.min.js">
-    </script>
-  <script type="text/javascript" src="app.js">
-    </script>
 </body>
 </html>
