@@ -1,0 +1,12 @@
+<ul class="list-group">
+  <li ng-if="$ctrl.menuitems.length >= 1" class="list-group-item active"><span class="badge">{{$ctrl.menuitems.length}}</span><strong> Menu Items in Selected Category </strong></li>
+  <li ng-repeat="menuitem in $ctrl.menuitems" class="list-group-item">
+    <div class="row">
+        <div class="col-sm-10">
+            <strong>{{menuitem.name}}</strong> ({{menuitem.short_name}})
+            <p style="font-style: italic;">{{menuitem.description}}</p>
+            <p>Price($): <strong>{{menuitem.price_large}}</strong></p>
+        </div>
+    </div>
+  </li>
+</ul>
