@@ -1,19 +1,12 @@
 body {
   font-size: 1.2em;
   text-align: center;
-  background-repeat: no-repeat no-repeat;
-  background-size: contain;
-  background-image: url(../images/restaurant.jpg);
 }
 
 .error {
   color: red;
   font-weight: bold;
   display: none;
-}
-
-a {
-  color: #3c6c97;
 }
 
 h1 {
